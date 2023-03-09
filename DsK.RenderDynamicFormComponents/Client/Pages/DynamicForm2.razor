@@ -1,0 +1,47 @@
+﻿<div class="container border">
+    <h3>Users</h3>
+    <hr />
+    <button @onclick="() => AddInput(HTMLInputType.Textbox)" class="btn btn-primary">Add Textbox</button>
+    <button @onclick="AddValueTextarea" class="btn btn-primary">Add Textarea</button>
+    <button @onclick="AddValueCheckbox" class="btn btn-primary">Add Checkbox</button>
+
+    @for (int i = 0; i < values.Count; i++)
+    {
+        var index = i;
+        if (values[i].Type == HTMLInputType.Textbox)
+        {
+            <div>
+                <input type="text" @onchange="(e) => UpdateValue(index, e.Value.ToString())" value="@values[i].Value" />
+                <button @onclick="() => RemoveValue(index)" class="btn btn-outline-danger">Remove</button>
+            </div>
+        }
+        else if (values[i].Type == HTMLInputType.Textarea)
+        {
+            <div>
+                <textarea rows="4" cols="50" @onchange="(e) => UpdateValue(index, e.Value.ToString())" value="@values[i].Value">
+                        </textarea>
+                <button @onclick="() => RemoveValue(index)" class="btn btn-outline-danger">Remove</button>
+            </div>
+        }
+
+        else if (values[i].Type == HTMLInputType.Checkbox)
+        {
+            <div>
+                <input type="checkbox" @onchange="(e) => UpdateValue(index, e.Value.ToString())" value="@values[i].Value">
+                <label> Label</label>
+                <button @onclick="() => RemoveValue(index)" class="btn btn-outline-danger">Remove</button>
+            </div>
+        }
+
+     
+    }
+    <hr />
+    <div>
+        <button @onclick="HandleSubmit" class="btn btn-success">Submit</button>
+    </div>
+    <hr />
+    @for (int j = 0; j < values.Count; j++)
+    {
+        <p>@values[j].Value</p>
+    }
+</div>
