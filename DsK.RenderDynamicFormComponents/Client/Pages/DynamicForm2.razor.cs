@@ -1,49 +1,37 @@
 ﻿using DsK.RenderDynamicFormComponents.Shared;
+using Microsoft.AspNetCore.Components;
 
 namespace DsK.RenderDynamicFormComponents.Client.Pages;
 public partial class DynamicForm2
 {
 
-    private List<HTMLInput> values = new List<HTMLInput>();
+    private List<HTMLInput> _values = new List<HTMLInput>();
+    private string _selectedHTMLInputType = HTMLInputType.Textbox.ToString();
 
-
-    private void AddInput(HTMLInputType inputType)
+    private void SelecteHTMLInputType(ChangeEventArgs e)
     {
-        var newinput = new HTMLInput(string.Empty, inputType);
-        values.Add(newinput);
-    }
-    private void AddValueTextBox()
-    {
-        var newinput = new HTMLInput(string.Empty, HTMLInputType.Textbox);   
-        values.Add(newinput);
+        _selectedHTMLInputType = e.Value.ToString();
     }
 
-    private void AddValueTextarea()
+    private void CreateHTMLInput()
     {
-        var newinput = new HTMLInput(string.Empty, HTMLInputType.Textarea); 
-        values.Add(newinput);
+        var newinput = new HTMLInput(string.Empty, Enum.Parse<HTMLInputType>(_selectedHTMLInputType));
+        _values.Add(newinput);
     }
 
-    private void AddValueCheckbox()
-    {
-        var newinput = new HTMLInput(string.Empty, HTMLInputType.Checkbox);
-        values.Add(newinput);
-    }
     private void UpdateValue(int i, string value)
     {
-        values[i].Value = value;
+        _values[i].Value = value;
     }
 
-    private void RemoveValue(int i) => values.RemoveAt(i);
+    private void RemoveValue(int i) => _values.RemoveAt(i);
     private void HandleSubmit()
     {
-        foreach (var item in values)
+        foreach (var item in _values)
         {
             Console.WriteLine(item.Value);
         }
     }
-
-
 }
 
 public class HTMLInput
